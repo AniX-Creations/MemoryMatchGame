@@ -40,7 +40,7 @@ select { background: #f5f6ff; color: #384366; border: 1px solid #e2e6fa; border-
 .stat small { color: #8990a9; font-size: .7rem; font-weight: 800; margin-top: 3px; }
 .message { min-height: 42px; display: grid; place-items: center; text-align: center; padding: 10px 4px; color: #7165c7; font-weight: 800; }
 .game-board { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 11px; }
-.card { position: relative; aspect-ratio: 1 / .92; min-width: 0; border: 0; border-radius: 15px; background: transparent; perspective: 700px; padding: 0; }
+.card { position: relative; width: 90%; justify-self: center; aspect-ratio: 1 / .92; min-width: 0; border: 0; border-radius: 15px; background: transparent; perspective: 700px; padding: 0; }
 .card-inner { position: absolute; inset: 0; display: grid; transition: transform .42s cubic-bezier(.2,.7,.2,1); transform-style: preserve-3d; }
 .card.flipped .card-inner, .card.matched .card-inner { transform: rotateY(180deg); }
 .card-face { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 15px; backface-visibility: hidden; }
