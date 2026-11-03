@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f7ff">
+  <meta name="description" content="A fun animal memory matching game for the whole family.">
+  <title>Memory Match Adventure</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <main class="game-shell">
+    <header class="hero">
+      <div class="eyebrow">🧠 PLAY • REMEMBER • WIN</div>
+      <h1>Memory Match <span>Adventure!</span></h1>
+      <p>Find all the matching animal friends. How good is your memory?</p>
+    </header>
+
+    <section class="game-panel" aria-label="Memory matching game">
+      <div class="toolbar">
+        <label class="level-picker">
+          <span>Difficulty</span>
+          <select id="difficulty" aria-label="Choose difficulty">
+            <option value="easy">Easy · 8 pairs</option>
+            <option value="medium" selected>Medium · 10 pairs</option>
+            <option value="hard">Hard · 12 pairs</option>
+          </select>
+        </label>
+        <button id="restart" class="restart-button" type="button">↻ New game</button>
+      </div>
+
+      <div class="stats" aria-live="polite">
+        <div class="stat"><span class="stat-icon">🎯</span><div><strong id="moves">0</strong><small>Moves</small></div></div>
+        <div class="stat"><span class="stat-icon">⏱️</span><div><strong id="timer">00:00</strong><small>Time</small></div></div>
+        <div class="stat"><span class="stat-icon">⭐</span><div><strong id="matches">0 / 10</strong><small>Matches</small></div></div>
+      </div>
+
+      <div id="message" class="message" role="status">Ready, set, match! Find two of the same animal.</div>
+      <div id="game-board" class="game-board" aria-label="Memory cards"></div>
+      <div class="bottom-row">
+        <span>💡 Tip: Try to remember where each animal is hiding.</span>
+        <button id="sound-toggle" class="sound-button" type="button" aria-pressed="true">🔊 Sound on</button>
+      </div>
+    </section>
+    <footer>Made for curious minds and big smiles ✨</footer>
+  </main>
+
+  <div id="win-dialog" class="dialog-backdrop" hidden>
+    <section class="win-card" role="dialog" aria-modal="true" aria-labelledby="win-title">
+      <div class="win-emoji">🏆🎉</div>
+      <h2 id="win-title">Amazing work!</h2>
+      <p>You found every animal friend!</p>
+      <div class="win-results"><span><strong id="final-moves">0</strong><small>Moves</small></span><span><strong id="final-time">00:00</strong><small>Time</small></span></div>
+      <button id="play-again" class="primary-button" type="button">Play again 🚀</button>
+    </section>
+  </div>
+</body>
+</html>
