@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  // Pokémon sprites are served by the open-source PokeAPI sprites repository.
+  // High-resolution official Pokémon artwork from the PokeAPI sprites collection.
   const POKEMON = [
     { name: "Bulbasaur", id: 1 }, { name: "Charmander", id: 4 },
     { name: "Squirtle", id: 7 }, { name: "Pikachu", id: 25 },
@@ -91,13 +91,13 @@
     card.className = "card";
     card.dataset.name = pokemon.name;
     card.setAttribute("aria-label", "Hidden card " + (index + 1));
-    const spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + pokemon.id + ".png";
+    const artworkUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" + pokemon.id + ".png";
     card.innerHTML = `
       <span class="card-inner">
         <span class="card-face card-back" aria-hidden="true">?</span>
         <span class="card-face card-front">
-          <img src="${spriteUrl}" alt="${pokemon.name}" draggable="false"
-               style="width:78%;height:78%;object-fit:contain;image-rendering:pixelated">
+          <img src="${artworkUrl}" alt="${pokemon.name}" draggable="false"
+               style="width:78%;height:78%;object-fit:contain">
         </span>
       </span>`;
     card.addEventListener("click", () => revealCard(card, pokemon));
