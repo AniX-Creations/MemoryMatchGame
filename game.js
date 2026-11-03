@@ -1,13 +1,14 @@
 (() => {
   "use strict";
 
-  const ANIMALS = [
-    { name: "Lion", emoji: "🦁" }, { name: "Panda", emoji: "🐼" },
-    { name: "Fox", emoji: "🦊" }, { name: "Frog", emoji: "🐸" },
-    { name: "Monkey", emoji: "🐵" }, { name: "Penguin", emoji: "🐧" },
-    { name: "Tiger", emoji: "🐯" }, { name: "Koala", emoji: "🐨" },
-    { name: "Elephant", emoji: "🐘" }, { name: "Giraffe", emoji: "🦒" },
-    { name: "Rabbit", emoji: "🐰" }, { name: "Bear", emoji: "🐻" }
+  // Pokémon sprites are served by the open-source PokeAPI sprites repository.
+  const POKEMON = [
+    { name: "Bulbasaur", id: 1 }, { name: "Charmander", id: 4 },
+    { name: "Squirtle", id: 7 }, { name: "Pikachu", id: 25 },
+    { name: "Jigglypuff", id: 39 }, { name: "Meowth", id: 52 },
+    { name: "Psyduck", id: 54 }, { name: "Gengar", id: 94 },
+    { name: "Mewtwo", id: 150 }, { name: "Snorlax", id: 143 },
+    { name: "Eevee", id: 133 }, { name: "Lucario", id: 448 }
   ];
   const PAIRS_BY_LEVEL = { easy: 8, medium: 10, hard: 12 };
 
@@ -84,26 +85,30 @@
     }, 1000);
   }
 
-  function createCard(animal, index) {
+  function createCard(pokemon, index) {
     const card = document.createElement("button");
     card.type = "button";
     card.className = "card";
-    card.dataset.name = animal.name;
+    card.dataset.name = pokemon.name;
     card.setAttribute("aria-label", "Hidden card " + (index + 1));
+    const spriteUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + pokemon.id + ".png";
     card.innerHTML = `
       <span class="card-inner">
         <span class="card-face card-back" aria-hidden="true">?</span>
-        <span class="card-face card-front" aria-hidden="true">${animal.emoji}</span>
+        <span class="card-face card-front">
+          <img src="${spriteUrl}" alt="${pokemon.name}" draggable="false"
+               style="width:78%;height:78%;object-fit:contain;image-rendering:pixelated">
+        </span>
       </span>`;
-    card.addEventListener("click", () => revealCard(card, animal));
+    card.addEventListener("click", () => revealCard(card, pokemon));
     return card;
   }
 
-  function revealCard(card, animal) {
+  function revealCard(card, pokemon) {
     if (lockBoard || card === firstCard || card.classList.contains("matched") || card.classList.contains("flipped")) return;
     startTimer();
     card.classList.add("flipped");
-    card.setAttribute("aria-label", animal.name);
+    card.setAttribute("aria-label", pokemon.name);
     playTone(420, 0.07);
 
     if (!firstCard) {
@@ -121,7 +126,7 @@
       firstCard.disabled = true;
       secondCard.disabled = true;
       matches += 1;
-      message.textContent = "Lovely match! You found the " + animal.name + "s! 🎉";
+      message.textContent = "Great match! You found " + pokemon.name + "! 🎉";
       playTone(660, 0.12);
       window.setTimeout(() => playTone(880, 0.16), 90);
       firstCard = null;
@@ -148,7 +153,7 @@
   function finishGame() {
     window.clearInterval(timerId);
     timerId = null;
-    message.textContent = "You did it! Every animal has a friend! 🏆";
+    message.textContent = "You caught every matching Pokémon! 🏆";
     document.getElementById("final-moves").textContent = String(moves);
     document.getElementById("final-time").textContent = formatTime(seconds);
     window.setTimeout(() => { winDialog.hidden = false; }, 450);
@@ -168,11 +173,11 @@
     seconds = 0;
     started = false;
     winDialog.hidden = true;
-    message.textContent = "Ready, set, match! Find two of the same animal.";
+    message.textContent = "Ready, set, match! Find two of the same Pokémon.";
     const pairCount = PAIRS_BY_LEVEL[difficulty.value];
-    const chosen = ANIMALS.slice(0, pairCount);
+    const chosen = POKEMON.slice(0, pairCount);
     const cards = shuffle([...chosen, ...chosen]);
-    board.replaceChildren(...cards.map((animal, index) => createCard(animal, index)));
+    board.replaceChildren(...cards.map((pokemon, index) => createCard(pokemon, index)));
     updateStats();
   }
 
