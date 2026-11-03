@@ -97,7 +97,7 @@
         <span class="card-face card-back" aria-hidden="true">?</span>
         <span class="card-face card-front">
           <img src="${artworkUrl}" alt="${pokemon.name}" draggable="false"
-               style="width:78%;height:78%;object-fit:contain">
+               style="width:68%;height:68%;object-fit:contain">
         </span>
       </span>`;
     card.addEventListener("click", () => revealCard(card, pokemon));
