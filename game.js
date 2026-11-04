@@ -2,13 +2,36 @@
   "use strict";
 
   // High-resolution official Pokémon artwork from the PokeAPI sprites collection.
+  // Each game randomly selects the Pokémon needed for the chosen difficulty.
   const POKEMON = [
-    { name: "Bulbasaur", id: 1 }, { name: "Charmander", id: 4 },
-    { name: "Squirtle", id: 7 }, { name: "Pikachu", id: 25 },
-    { name: "Jigglypuff", id: 39 }, { name: "Meowth", id: 52 },
-    { name: "Psyduck", id: 54 }, { name: "Gengar", id: 94 },
-    { name: "Mewtwo", id: 150 }, { name: "Snorlax", id: 143 },
-    { name: "Eevee", id: 133 }, { name: "Lucario", id: 448 }
+    { name: "Bulbasaur", id: 1 }, { name: "Ivysaur", id: 2 }, { name: "Venusaur", id: 3 },
+    { name: "Charmander", id: 4 }, { name: "Charmeleon", id: 5 }, { name: "Charizard", id: 6 },
+    { name: "Squirtle", id: 7 }, { name: "Wartortle", id: 8 }, { name: "Blastoise", id: 9 },
+    { name: "Caterpie", id: 10 }, { name: "Butterfree", id: 12 },
+    { name: "Pikachu", id: 25 }, { name: "Raichu", id: 26 }, { name: "Sandshrew", id: 27 },
+    { name: "Vulpix", id: 37 }, { name: "Jigglypuff", id: 39 }, { name: "Meowth", id: 52 },
+    { name: "Psyduck", id: 54 }, { name: "Growlithe", id: 58 }, { name: "Poliwag", id: 60 },
+    { name: "Abra", id: 63 }, { name: "Machop", id: 66 }, { name: "Geodude", id: 74 },
+    { name: "Ponyta", id: 77 }, { name: "Slowpoke", id: 79 }, { name: "Magnemite", id: 81 },
+    { name: "Gastly", id: 92 }, { name: "Haunter", id: 93 }, { name: "Gengar", id: 94 },
+    { name: "Onix", id: 95 }, { name: "Cubone", id: 104 }, { name: "Chansey", id: 113 },
+    { name: "Scyther", id: 123 }, { name: "Electabuzz", id: 125 }, { name: "Magmar", id: 126 },
+    { name: "Magikarp", id: 129 }, { name: "Lapras", id: 131 }, { name: "Ditto", id: 132 },
+    { name: "Eevee", id: 133 }, { name: "Vaporeon", id: 134 }, { name: "Jolteon", id: 135 },
+    { name: "Flareon", id: 136 }, { name: "Snorlax", id: 143 },
+    { name: "Articuno", id: 144 }, { name: "Zapdos", id: 145 }, { name: "Moltres", id: 146 },
+    { name: "Dratini", id: 147 }, { name: "Dragonair", id: 148 }, { name: "Dragonite", id: 149 },
+    { name: "Mewtwo", id: 150 }, { name: "Mew", id: 151 },
+    { name: "Chikorita", id: 152 }, { name: "Cyndaquil", id: 155 }, { name: "Totodile", id: 158 },
+    { name: "Togepi", id: 175 }, { name: "Mareep", id: 179 }, { name: "Umbreon", id: 197 },
+    { name: "Treecko", id: 252 }, { name: "Torchic", id: 255 }, { name: "Mudkip", id: 258 },
+    { name: "Gardevoir", id: 282 }, { name: "Lucario", id: 448 }, { name: "Riolu", id: 447 },
+    { name: "Gible", id: 443 }, { name: "Garchomp", id: 445 },
+    { name: "Snivy", id: 495 }, { name: "Oshawott", id: 501 }, { name: "Zorua", id: 570 },
+    { name: "Greninja", id: 658 }, { name: "Sylveon", id: 700 },
+    { name: "Rowlet", id: 722 }, { name: "Litten", id: 725 }, { name: "Popplio", id: 728 },
+    { name: "Scorbunny", id: 813 }, { name: "Sobble", id: 816 },
+    { name: "Sprigatito", id: 906 }, { name: "Fuecoco", id: 909 }, { name: "Quaxly", id: 912 }
   ];
   const PAIRS_BY_LEVEL = { easy: 8, medium: 10, hard: 12 };
 
@@ -175,7 +198,7 @@
     winDialog.hidden = true;
     message.textContent = "Ready, set, match! Find two of the same Pokémon.";
     const pairCount = PAIRS_BY_LEVEL[difficulty.value];
-    const chosen = POKEMON.slice(0, pairCount);
+    const chosen = shuffle(POKEMON).slice(0, pairCount);
     const cards = shuffle([...chosen, ...chosen]);
     board.replaceChildren(...cards.map((pokemon, index) => createCard(pokemon, index)));
     updateStats();
